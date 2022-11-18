@@ -1,1 +1,2 @@
-# Bookshelf
+# library
+A small library app.
