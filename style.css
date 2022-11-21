@@ -76,11 +76,12 @@ button {
     flex: 1;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    gap: 200px;
 }
 
 .book-card {
     height: fit-content;
+    width: fit-content;
     padding: 10px;
     background-color: #c7d2fe;
     font-size: 1.2rem;

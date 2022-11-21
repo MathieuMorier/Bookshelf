@@ -523,6 +523,9 @@ function updateBookshelf() {
     if (!myLibrary.length) {
         booksGrid[0].textContent = 'Add your first book.';
         booksGrid[1].textContent = 'Add your first book.';
+        booksGrid[2].textContent = 'Add your first book.';
+        booksGrid[3].textContent = 'Add your first book.';
+        booksGrid[4].textContent = 'Add your first book.';
     }
 
     updateStats();
