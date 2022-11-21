@@ -16,20 +16,35 @@ let myLibrary = [];
 
 class Book {
     constructor(title, author, pages, read,
-        reading = true, toRead = true,
-        recommended = true, favorites = true) {
+        reading = false, toRead = false,
+        recommended = true, favorites = false) {
         this.title = title;
         this.author = author;
         this.pages = pages;
         this.read = read;
         this.reading = reading;
         this.toRead = toRead;
-        this.recommended = recommended;
+		if(this.read == true)
+        this.recommended = false;
+	    else
+		this.recommended = recommended;
         this.favorites = favorites;
     }
     toggleRead() {
         this.read = this.read ? false : true;
     }
+    toggleReading() {
+        this.reading = this.reading ? false : true;
+    }
+    toggletoRead() {
+        this.toRead = this.toRead ? false : true;
+    }
+    toggleRecommended() {
+        this.recommended = this.recommended ? false : true;
+    }	
+	toggleFavorites() {
+        this.favorites = this.favorites ? false : true;
+    }			
 }
 
 function addBookToLibrary(title, author, pages, read) {
@@ -40,6 +55,47 @@ function addBookToLibrary(title, author, pages, read) {
 const deleteBook = (e) => {
     const index = e.target.parentNode.dataset.libraryIndex;
     myLibrary.splice(index, 1);
+    updateBookshelf();
+}
+
+function toggleReadHandler (book_ref){
+    book_ref.book_obj.toggleRead();
+    if(book_ref.book_obj.read == true) {
+		book_ref.book_obj.toRead = false;
+		book_ref.book_obj.reading = false;
+	}
+	if(book_ref.book_obj.read == false && book_ref.book_obj.toRead == false && book_ref.book_obj.reading == false)
+	{
+		book_ref.book_obj.recommended = true;
+	}
+	console.log("toggleReadHandle called on: " + book_ref.book_obj.title);
+    updateBookshelf();
+}
+
+function toggletoReadHandler (book_ref){
+    book_ref.book_obj.toggletoRead();
+    if(book_ref.book_obj.toRead == true) {
+		book_ref.book_obj.read = false;
+		book_ref.book_obj.reading = false;
+	}
+	if(book_ref.book_obj.read == false && book_ref.book_obj.toRead == false && book_ref.book_obj.reading == false)
+	{
+		book_ref.book_obj.recommended = true;
+	}
+	console.log("Pressed button for " + book_ref.book_obj.title);
+    updateBookshelf();
+}
+
+function toggleReadingHandler (book_ref){
+    book_ref.book_obj.toggleReading();
+    if(book_ref.book_obj.reading == true) {
+		book_ref.book_obj.toRead = false;
+		book_ref.book_obj.read = false;
+	}
+	if(book_ref.book_obj.read == false && book_ref.book_obj.toRead == false && book_ref.book_obj.reading == false)
+	{
+		book_ref.book_obj.recommended = true;
+	}
     updateBookshelf();
 }
 
@@ -57,16 +113,22 @@ function updateBookshelf() {
     let favBook = [];
     for( const book of myLibrary)
     {
-        if(book.read == true)
+        if(book.read == true){
+		  console.log("Added book to Read shelf: " + book.title);
           readBook.push(book);
-        if(book.reading == true)
-          readingBook.push(book)
-        if(book.toRead == true)
+		}
+        if(book.reading == true){
+          readingBook.push(book);
+		}
+        if(book.toRead == true){
           toreadBook.push(book);
-        if(book.recommended == true)
+		}
+        if(book.recommended == true){
           recBook.push(book);
-        if(book.favorites == true)
+		}
+        if(book.favorites == true){
           favBook.push(book);
+		}
     }
     console.log(readBook.length)
     console.log(readingBook.length)
@@ -77,7 +139,10 @@ function updateBookshelf() {
     // add book cards to the books grid
     for (const book of readBook) {
         // current book's index in myLibrary
+		// pointer to current book for button-linked listener functions
+		var book_ref = {book_obj: book};
         const index = document.querySelectorAll('.book-card').length;
+		console.log("Book on Read shelf: " + book.title);
         
         bookCard = document.createElement('article');
         bookCard.classList.add('book-card');
@@ -102,9 +167,30 @@ function updateBookshelf() {
         btnRead.classList.add('btn', 'btn-read');
         btnRead.classList.add(book.read ? 'btn-green' : 'btn-red');
         btnRead.textContent = (book.read ? "Read" : "Not read");
-        btnRead.addEventListener('click', toggleReadHandler);
+        btnRead.addEventListener('click', function(){ toggleReadHandler(book_ref); });
         bookButtons.appendChild(btnRead);
-
+		
+        const btntoRead = document.createElement('button');
+        btntoRead.classList.add('btn', 'btn-toread');
+        btntoRead.classList.add(book.toRead ? 'btn-green' : 'btn-red');
+        btntoRead.textContent = (book.toRead ? "To read" : "Not to read");
+        btntoRead.addEventListener('click', function(){ toggletoReadHandler(book_ref); });
+        bookButtons.appendChild(btntoRead);
+		
+        const btnReading = document.createElement('button');
+        btnReading.classList.add('btn', 'btn-reading');
+        btnReading.classList.add(book.reading ? 'btn-green' : 'btn-red');
+        btnReading.textContent = (book.reading ? "Reading" : "Not reading");
+        btnReading.addEventListener('click', function(){ toggleReadingHandler(book_ref); });
+        bookButtons.appendChild(btnReading);
+/*
+        const btnFavorite = document.createElement('button');
+        btnFavorite.classList.add('btn', 'btn-favorite');
+        btnFavorite.classList.add(book.favorites ? 'btn-green' : 'btn-red');
+        btnFavorite.textContent = (book.favorites ? "Favorited" : "Not favorited");
+        btnFavorite.addEventListener('click', toggleFavoritesHandler);
+        bookButtons.appendChild(btnFavorite);
+*/
         const btnDelete = document.createElement('button');
         btnDelete.classList.add('btn', 'btn-delete');
         btnDelete.textContent = "Delete";
@@ -123,6 +209,8 @@ function updateBookshelf() {
     // add book cards to the books grid
     for (const book of readingBook) {
         // current book's index in myLibrary
+		// pointer to current book for button-linked listener functions
+		var book_ref = {book_obj: book};
         const index = document.querySelectorAll('.book-card').length;
         
         bookCard = document.createElement('article');
@@ -148,8 +236,22 @@ function updateBookshelf() {
         btnRead.classList.add('btn', 'btn-read');
         btnRead.classList.add(book.read ? 'btn-green' : 'btn-red');
         btnRead.textContent = (book.read ? "Read" : "Not read");
-        btnRead.addEventListener('click', toggleReadHandler);
+        btnRead.addEventListener('click', function(){ toggleReadHandler(book_ref); });
         bookButtons.appendChild(btnRead);
+		
+        const btntoRead = document.createElement('button');
+        btntoRead.classList.add('btn', 'btn-toread');
+        btntoRead.classList.add(book.toRead ? 'btn-green' : 'btn-red');
+        btntoRead.textContent = (book.toRead ? "To read" : "Not to read");
+        btntoRead.addEventListener('click', function(){ toggletoReadHandler(book_ref); });
+        bookButtons.appendChild(btntoRead);
+		
+        const btnReading = document.createElement('button');
+        btnReading.classList.add('btn', 'btn-reading');
+        btnReading.classList.add(book.reading ? 'btn-green' : 'btn-red');
+        btnReading.textContent = (book.reading ? "Reading" : "Not reading");
+        btnReading.addEventListener('click', function(){ toggleReadingHandler(book_ref); });
+        bookButtons.appendChild(btnReading);
 
         const btnDelete = document.createElement('button');
         btnDelete.classList.add('btn', 'btn-delete');
@@ -168,6 +270,8 @@ function updateBookshelf() {
     // add book cards to the books grid
     for (const book of toreadBook) {
         // current book's index in myLibrary
+		// pointer to current book for button-linked listener functions
+		var book_ref = {book_obj: book};
         const index = document.querySelectorAll('.book-card').length;
         
         bookCard = document.createElement('article');
@@ -193,8 +297,22 @@ function updateBookshelf() {
         btnRead.classList.add('btn', 'btn-read');
         btnRead.classList.add(book.read ? 'btn-green' : 'btn-red');
         btnRead.textContent = (book.read ? "Read" : "Not read");
-        btnRead.addEventListener('click', toggleReadHandler);
+        btnRead.addEventListener('click', function(){ toggleReadHandler(book_ref); });
         bookButtons.appendChild(btnRead);
+		
+        const btntoRead = document.createElement('button');
+        btntoRead.classList.add('btn', 'btn-toread');
+        btntoRead.classList.add(book.toRead ? 'btn-green' : 'btn-red');
+        btntoRead.textContent = (book.toRead ? "To read" : "Not to read");
+        btntoRead.addEventListener('click', function(){ toggletoReadHandler(book_ref); });
+        bookButtons.appendChild(btntoRead);
+		
+        const btnReading = document.createElement('button');
+        btnReading.classList.add('btn', 'btn-reading');
+        btnReading.classList.add(book.reading ? 'btn-green' : 'btn-red');
+        btnReading.textContent = (book.reading ? "Reading" : "Not reading");
+        btnReading.addEventListener('click', function(){ toggleReadingHandler(book_ref); });
+        bookButtons.appendChild(btnReading);
 
         const btnDelete = document.createElement('button');
         btnDelete.classList.add('btn', 'btn-delete');
@@ -213,6 +331,8 @@ function updateBookshelf() {
     // add book cards to the books grid
     for (const book of recBook) {
         // current book's index in myLibrary
+		// pointer to current book for button-linked listener functions
+		var book_ref = {book_obj: book};
         const index = document.querySelectorAll('.book-card').length;
         
         bookCard = document.createElement('article');
@@ -238,8 +358,22 @@ function updateBookshelf() {
         btnRead.classList.add('btn', 'btn-read');
         btnRead.classList.add(book.read ? 'btn-green' : 'btn-red');
         btnRead.textContent = (book.read ? "Read" : "Not read");
-        btnRead.addEventListener('click', toggleReadHandler);
+        btnRead.addEventListener('click', function(){ toggleReadHandler(book_ref); });
         bookButtons.appendChild(btnRead);
+		
+        const btntoRead = document.createElement('button');
+        btntoRead.classList.add('btn', 'btn-toread');
+        btntoRead.classList.add(book.toRead ? 'btn-green' : 'btn-red');
+        btntoRead.textContent = (book.toRead ? "To read" : "Not to read");
+        btntoRead.addEventListener('click', function(){ toggletoReadHandler(book_ref); });
+        bookButtons.appendChild(btntoRead);
+		
+        const btnReading = document.createElement('button');
+        btnReading.classList.add('btn', 'btn-reading');
+        btnReading.classList.add(book.reading ? 'btn-green' : 'btn-red');
+        btnReading.textContent = (book.reading ? "Reading" : "Not reading");
+        btnReading.addEventListener('click', function(){ toggleReadingHandler(book_ref); });
+        bookButtons.appendChild(btnReading);
 
         const btnDelete = document.createElement('button');
         btnDelete.classList.add('btn', 'btn-delete');
@@ -258,6 +392,8 @@ function updateBookshelf() {
     // add book cards to the books grid
     for (const book of favBook) {
         // current book's index in myLibrary
+		// pointer to current book for button-linked listener functions
+		var book_ref = {book_obj: book};
         const index = document.querySelectorAll('.book-card').length;
         
         bookCard = document.createElement('article');
@@ -283,8 +419,22 @@ function updateBookshelf() {
         btnRead.classList.add('btn', 'btn-read');
         btnRead.classList.add(book.read ? 'btn-green' : 'btn-red');
         btnRead.textContent = (book.read ? "Read" : "Not read");
-        btnRead.addEventListener('click', toggleReadHandler);
+        btnRead.addEventListener('click', function(){ toggleReadHandler(book_ref); });
         bookButtons.appendChild(btnRead);
+		
+        const btntoRead = document.createElement('button');
+        btntoRead.classList.add('btn', 'btn-toread');
+        btntoRead.classList.add(book.toRead ? 'btn-green' : 'btn-red');
+        btntoRead.textContent = (book.toRead ? "To read" : "Not to read");
+        btntoRead.addEventListener('click', function(){ toggletoReadHandler(book_ref); });
+        bookButtons.appendChild(btntoRead);
+		
+        const btnReading = document.createElement('button');
+        btnReading.classList.add('btn', 'btn-reading');
+        btnReading.classList.add(book.reading ? 'btn-green' : 'btn-red');
+        btnReading.textContent = (book.reading ? "Reading" : "Not reading");
+        btnReading.addEventListener('click', function(){ toggleReadingHandler(book_ref); });
+        bookButtons.appendChild(btnReading);
 
         const btnDelete = document.createElement('button');
         btnDelete.classList.add('btn', 'btn-delete');
@@ -343,7 +493,7 @@ function addBookCards(shelfNum,...arrayBook)
         btnRead.classList.add('btn', 'btn-read');
         btnRead.classList.add(book.read ? 'btn-green' : 'btn-red');
         btnRead.textContent = (book.read ? "Read" : "Not read");
-        btnRead.addEventListener('click', toggleReadHandler);
+        btnRead.addEventListener('click', function(){ toggleReadHandler(book_ref); });
         bookButtons.appendChild(btnRead);
 
         const btnDelete = document.createElement('button');
@@ -393,11 +543,49 @@ const submitBook = () => {
 }
 
 // call toggleRead() method with the right Book object
+/*
 const toggleReadHandler = (e) => {
     const index = e.target.parentNode.dataset.libraryIndex;
-    myLibrary[index].toggleRead();
+    this.toggleRead();
+    if(this.read == true) {
+		this.toRead = false;
+		this.reading = false;
+	}
+	if(this.read == false && this.toRead == false && this.reading == false)
+	{
+		this.recommended = true;
+	}
+	console.log("toggleReadHandle called on:" + this.title);
     updateBookshelf();
 }
+
+const toggletoReadHandler = (e) => {
+    const index = e.target.parentNode.dataset.libraryIndex;
+    myLibrary[index].toggletoRead();
+    if(myLibrary[index].toRead == true) {
+		myLibrary[index].read = false;
+		myLibrary[index].reading = false;
+	}
+	if(myLibrary[index].read == false && myLibrary[index].toRead == false && myLibrary[index].reading == false)
+	{
+		myLibrary[index].recommended = true;
+	}
+    updateBookshelf();
+}
+
+const toggleReadingHandler = (e) => {
+    const index = e.target.parentNode.dataset.libraryIndex;
+    myLibrary[index].toggleReading();
+    if(myLibrary[index].reading == true) {
+		myLibrary[index].toRead = false;
+		myLibrary[index].read = false;
+	}
+	if(myLibrary[index].read == false && myLibrary[index].toRead == false && myLibrary[index].reading == false)
+	{
+		myLibrary[index].recommended = true;
+	}
+    updateBookshelf();
+}*/
 
 const toggleForm = () => {
     bookForm.classList.toggle('active');
