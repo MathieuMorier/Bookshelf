@@ -27,95 +27,92 @@
     </aside>
     <main class="main">
         <button type="button" class="btn btn-bold" id="btn-add">+ Add Book</button>
-        <!--Read Shelf + genres-->
-        <h1>Read</h1>
-          <h3>Comedy</h3>
-          <div class="books-grid"></div>
-          <h3>Romance</h3>
-          <div class="books-grid"></div>
-          <h3>Horror</h3>
-          <div class="books-grid"></div>
-          <h3>Drama</h3>
-          <div class="books-grid"></div>
-          <h3>Science Fiction</h3>
-          <div class="books-grid"></div>
-          <h3>Others</h3>
-          <div class="books-grid"></div>
-        
-        <!--Reading Shelf + genres-->
-        <h1>Reading</h1>
-          <h3>Comedy</h3>
-          <div class="books-grid"></div>
-          <h3>Romance</h3>
-          <div class="books-grid"></div>
-          <h3>Horror</h3>
-          <div class="books-grid"></div>
-          <h3>Drama</h3>
-          <div class="books-grid"></div>
-          <h3>Science Fiction</h3>
-          <div class="books-grid"></div>
-          <h3>Others</h3>
-          <div class="books-grid"></div>
-        
-        <!--To Read Shelf + genres-->
-        <h1>To Read</h1>
-          <h3>Comedy</h3>
-          <div class="books-grid"></div>
-          <h3>Romance</h3>
-          <div class="books-grid"></div>
-          <h3>Horror</h3>
-          <div class="books-grid"></div>
-          <h3>Drama</h3>
-          <div class="books-grid"></div>
-          <h3>Science Fiction</h3>
-          <div class="books-grid"></div>
-          <h3>Others</h3>
-          <div class="books-grid"></div>
-        
-        <!--Recommendation Shelf + genres-->
-        <h1>Recommendation</h1>
-          <h3>Comedy</h3>
-          <div class="books-grid"></div>
-          <h3>Romance</h3>
-          <div class="books-grid"></div>
-          <h3>Horror</h3>
-          <div class="books-grid"></div>
-          <h3>Drama</h3>
-          <div class="books-grid"></div>
-          <h3>Science Fiction</h3>
-          <div class="books-grid"></div>
-          <h3>Others</h3>
-          <div class="books-grid"></div>
-
-        <!--Favorites Shelf + Genres-->
-        <h1>Favorites</h1>
-          <h3>Comedy</h3>
-          <div class="books-grid"></div>
-          <h3>Romance</h3>
-          <div class="books-grid"></div>
-          <h3>Horror</h3>
-          <div class="books-grid"></div>
-          <h3>Drama</h3>
-          <div class="books-grid"></div>
-          <h3>Science Fiction</h3>
-          <div class="books-grid"></div>
-          <h3>Others</h3>
-          <div class="books-grid"></div>
+        <h1>Read:</h1>
+		<details>
+		    <summary>View all</summary>
+			<h3>Comedy</h3>
+			<div class="books-grid"></div>
+			<h3>Romance</h3>
+			<div class="books-grid"></div>
+			<h3>Horror</h3>
+			<div class="books-grid"></div>
+			<h3>Drama</h3>
+			<div class="books-grid"></div>
+			<h3>Science Fiction</h3>
+			<div class="books-grid"></div>
+			<h3>Other</h3>
+			<div class="books-grid"></div>
+		</details>
+        <h2>Reading:</h2>
+		<details>
+		    <summary>View all</summary>
+			<h3>Comedy</h3>
+			<div class="books-grid"></div>
+			<h3>Romance</h3>
+			<div class="books-grid"></div>
+			<h3>Horror</h3>
+			<div class="books-grid"></div>
+			<h3>Drama</h3>
+			<div class="books-grid"></div>
+			<h3>Science Fiction</h3>
+			<div class="books-grid"></div>
+			<h3>Other</h3>
+			<div class="books-grid"></div>
+		</details>
+        <h2>To Read</h2>
+		<details>
+		    <summary>View all</summary>
+			<h3>Comedy</h3>
+			<div class="books-grid"></div>
+			<h3>Romance</h3>
+			<div class="books-grid"></div>
+			<h3>Horror</h3>
+			<div class="books-grid"></div>
+			<h3>Drama</h3>
+			<div class="books-grid"></div>
+			<h3>Science Fiction</h3>
+			<div class="books-grid"></div>
+			<h3>Other</h3>
+			<div class="books-grid"></div>
+		</details>
+        <h2>Recommendation</h2>
+		<details>
+		    <summary>View all</summary>
+			<h3>Comedy</h3>
+			<div class="books-grid"></div>
+			<h3>Romance</h3>
+			<div class="books-grid"></div>
+			<h3>Horror</h3>
+			<div class="books-grid"></div>
+			<h3>Drama</h3>
+			<div class="books-grid"></div>
+			<h3>Science Fiction</h3>
+			<div class="books-grid"></div>
+			<h3>Other</h3>
+			<div class="books-grid"></div>
+		</details>
+        <h2>Favorites</h2>
+		<details>
+		    <summary>View all</summary>
+			<h3>Comedy</h3>
+			<div class="books-grid"></div>
+			<h3>Romance</h3>
+			<div class="books-grid"></div>
+			<h3>Horror</h3>
+			<div class="books-grid"></div>
+			<h3>Drama</h3>
+			<div class="books-grid"></div>
+			<h3>Science Fiction</h3>
+			<div class="books-grid"></div>
+			<h3>Other</h3>
+			<div class="books-grid"></div>
+		</details>
         
         <form class="book-form">
             <h2>Add a new book</h2>
             <input type="text" name="title" id="input-title" placeholder="Title" required>
             <input type="text" name="author" id="input-author" placeholder="Author" required>
             <input type="number" name="pages" id="input-pages" placeholder="Pages" required>
-            <select name="genres" id="input-genres" placeholder="Genres" required>
-                <option value="Drama">Drama</option>
-                <option value="Science Fiction">Science Fiction</option>
-                <option value="Comedy">Comedy</option>
-                <option value="Romance">Romance</option>
-                <option value="Horror">Horror</option>
-                <option value="Other">Other</option>
-            </select>
-            <input type="text" name="othergenres" id="input-other-genre" placeholder="Genre" style="display: none;">
             <div class="checkbox-container">
                 <label for="input-read">Have you read this book?</label>
                 <input type="checkbox" name="read" id="input-read">

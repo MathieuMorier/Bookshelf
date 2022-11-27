@@ -2,8 +2,6 @@ const btnAdd = document.querySelector('#btn-add');
 const btnReset = document.querySelector('#btn-reset');
 const bookForm = document.querySelector('.book-form');
 const inputTitle = document.querySelector('#input-title');
-const inputGenre = document.querySelector('#input-genres');
-const inputOtherGenre = document.querySelector('#input-other-genre');
 const inputAuthor = document.querySelector('#input-author');
 const inputPages = document.querySelector('#input-pages');
 const inputRead = document.querySelector('#input-read');
@@ -17,13 +15,12 @@ const booksUnread = document.querySelector('#books-unread');
 let myLibrary = [];
 
 class Book {
-    constructor(title, author, pages, genre, read,
+    constructor(title, author, pages, read, genre,
         reading = false, toRead = false,
-        recommended = true, favorites = false) {
+        recommended = true, favorites = false, del = false) {
         this.title = title;
         this.author = author;
         this.pages = pages;
-        this.genre = genre;
         this.read = read;
         this.reading = reading;
         this.toRead = toRead;
@@ -32,6 +29,8 @@ class Book {
 	    else
 		this.recommended = recommended;
         this.favorites = favorites;
+		this.genre = genre;
+		this.del = del;
     }
     toggleRead() {
         this.read = this.read ? false : true;
@@ -100,8 +99,8 @@ class Book {
 }
 }
 
-function addBookToLibrary(title, author, pages, genres, read) {
-    myLibrary.push(new Book(title, author, pages, genres, read));
+function addBookToLibrary(title, author, pages, read) {
+    myLibrary.push(new Book(title, author, pages, read));
     updateBookshelf();
 }
 
@@ -112,11 +111,10 @@ const deleteBook = (e) => {
 }
 
 function updateBookshelf() {
-    booksGrid[0].replaceChildren();
-    booksGrid[1].replaceChildren();
-    booksGrid[2].replaceChildren();
-    booksGrid[3].replaceChildren();
-    booksGrid[4].replaceChildren();
+  for(let j = 0; j < 30; j++)
+  {
+    booksGrid[j].replaceChildren();
+  }
     
     let readBook =[];
     let readingBook = [];
@@ -169,10 +167,6 @@ function updateBookshelf() {
         bookAuthor.classList.add('book-author');
         bookAuthor.textContent = book.author;
 
-        const bookGenres = document.createElement('p');
-        bookGenres.classList.add('book-genres');
-        bookGenres.textContent = book.genre;
-
         const bookPages = document.createElement('p');
         bookPages.classList.add('book-pages');
         bookPages.textContent = `${book.pages} pages`;
@@ -217,12 +211,21 @@ function updateBookshelf() {
 
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
-        bookCard.appendChild(bookGenres);
         bookCard.appendChild(bookPages);
         bookCard.appendChild(bookButtons);
-        
-        booksGrid[0].appendChild(bookCard);      
-	
+		
+		if(book.genre == 'Comedy')
+			booksGrid[0].appendChild(bookCard);      
+		else if(book.genre == 'Romance')
+			booksGrid[1].appendChild(bookCard);      
+		else if(book.genre == 'Horror')
+			booksGrid[2].appendChild(bookCard);      
+		else if(book.genre == 'Drama')
+			booksGrid[3].appendChild(bookCard);      
+		else if(book.genre == 'Science Fiction')
+			booksGrid[4].appendChild(bookCard);    
+        else  
+			booksGrid[5].appendChild(bookCard);   			
 	    ++i;
     }
 	
@@ -249,10 +252,6 @@ function updateBookshelf() {
         const bookAuthor = document.createElement('p');
         bookAuthor.classList.add('book-author');
         bookAuthor.textContent = book.author;
-
-        const bookGenres = document.createElement('p');
-        bookGenres.classList.add('book-genres');
-        bookGenres.textContent = book.genre;
 
         const bookPages = document.createElement('p');
         bookPages.classList.add('book-pages');
@@ -298,11 +297,21 @@ function updateBookshelf() {
 
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
-        bookCard.appendChild(bookGenres)
         bookCard.appendChild(bookPages);
         bookCard.appendChild(bookButtons);
         
-        booksGrid[1].appendChild(bookCard);    
+		if(book.genre == 'Comedy')
+			booksGrid[6].appendChild(bookCard);      
+		else if(book.genre == 'Romance')
+			booksGrid[7].appendChild(bookCard);      
+		else if(book.genre == 'Horror')
+			booksGrid[8].appendChild(bookCard);      
+		else if(book.genre == 'Drama')
+			booksGrid[9].appendChild(bookCard);      
+		else if(book.genre == 'Science Fiction')
+			booksGrid[10].appendChild(bookCard);    
+        else  
+			booksGrid[11].appendChild(bookCard);   	    
 
         ++i;		
     }
@@ -328,10 +337,6 @@ function updateBookshelf() {
         const bookAuthor = document.createElement('p');
         bookAuthor.classList.add('book-author');
         bookAuthor.textContent = book.author;
-
-        const bookGenres = document.createElement('p');
-        bookGenres.classList.add('book-genres');
-        bookGenres.textContent = book.genre;
 
         const bookPages = document.createElement('p');
         bookPages.classList.add('book-pages');
@@ -377,11 +382,21 @@ function updateBookshelf() {
 
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
-        bookCard.appendChild(bookGenres);
         bookCard.appendChild(bookPages);
         bookCard.appendChild(bookButtons);
         
-        booksGrid[2].appendChild(bookCard);   
+		if(book.genre == 'Comedy')
+			booksGrid[12].appendChild(bookCard);      
+		else if(book.genre == 'Romance')
+			booksGrid[13].appendChild(bookCard);      
+		else if(book.genre == 'Horror')
+			booksGrid[14].appendChild(bookCard);      
+		else if(book.genre == 'Drama')
+			booksGrid[15].appendChild(bookCard);      
+		else if(book.genre == 'Science Fiction')
+			booksGrid[16].appendChild(bookCard);    
+        else  
+			booksGrid[17].appendChild(bookCard);   	  
 
         ++i;		
     }
@@ -408,10 +423,6 @@ function updateBookshelf() {
         const bookAuthor = document.createElement('p');
         bookAuthor.classList.add('book-author');
         bookAuthor.textContent = book.author;
-
-        const bookGenres = document.createElement('p');
-        bookGenres.classList.add('book-genres');
-        bookGenres.textContent = book.genre;
 
         const bookPages = document.createElement('p');
         bookPages.classList.add('book-pages');
@@ -457,11 +468,21 @@ function updateBookshelf() {
 
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
-        bookCard.appendChild(bookGenres);
         bookCard.appendChild(bookPages);
         bookCard.appendChild(bookButtons);
         
-        booksGrid[3].appendChild(bookCard);
+		if(book.genre == 'Comedy')
+			booksGrid[18].appendChild(bookCard);      
+		else if(book.genre == 'Romance')
+			booksGrid[19].appendChild(bookCard);      
+		else if(book.genre == 'Horror')
+			booksGrid[20].appendChild(bookCard);      
+		else if(book.genre == 'Drama')
+			booksGrid[21].appendChild(bookCard);      
+		else if(book.genre == 'Science Fiction')
+			booksGrid[22].appendChild(bookCard);    
+        else  
+			booksGrid[23].appendChild(bookCard);   	
 
         ++i;		
     }
@@ -488,10 +509,6 @@ function updateBookshelf() {
         const bookAuthor = document.createElement('p');
         bookAuthor.classList.add('book-author');
         bookAuthor.textContent = book.author;
-
-        const bookGenres = document.createElement('p');
-        bookGenres.classList.add('book-genres');
-        bookGenres.textContent = book.genre;
 
         const bookPages = document.createElement('p');
         bookPages.classList.add('book-pages');
@@ -537,11 +554,21 @@ function updateBookshelf() {
 
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
-        bookCard.appendChild(bookGenres);
         bookCard.appendChild(bookPages);
         bookCard.appendChild(bookButtons);
         
-        booksGrid[4].appendChild(bookCard);  
+		if(book.genre == 'Comedy')
+			booksGrid[24].appendChild(bookCard);      
+		else if(book.genre == 'Romance')
+			booksGrid[25].appendChild(bookCard);      
+		else if(book.genre == 'Horror')
+			booksGrid[26].appendChild(bookCard);      
+		else if(book.genre == 'Drama')
+			booksGrid[27].appendChild(bookCard);      
+		else if(book.genre == 'Science Fiction')
+			booksGrid[28].appendChild(bookCard);    
+        else  
+			booksGrid[29].appendChild(bookCard);   	
 
         ++i;		
     }
@@ -574,12 +601,7 @@ const submitBook = () => {
     const title = inputTitle.value;
     const author = inputAuthor.value;
     const pages = inputPages.value;
-    let genres = inputGenre.value;
     const read = inputRead.checked;
-
-    if(genres === "Other") {
-        genres = inputOtherGenre.value;
-    }
 
     // require all input fields to be filled
     if (!(title && author && pages)) {
@@ -591,7 +613,7 @@ const submitBook = () => {
         alert('Book can not be shorter than 1 page.');
         return;
     }
-    addBookToLibrary(title, author, pages, genres, read);
+    addBookToLibrary(title, author, pages, read);
     toggleForm();
 }
 
@@ -606,7 +628,6 @@ const resetForm = () => {
     inputTitle.value = '';
     inputAuthor.value = '';
     inputPages.value = '';
-    inputGenre.valu = '';
     inputRead.checked = false;
 }
 
@@ -624,17 +645,8 @@ btnSubmit.addEventListener('click', submitBook)
 overlay.addEventListener('click', toggleForm);
 
 // add sample books
-myLibrary.push(new Book('Rich Dad, Poor Dad', 'Robert T. Kiyosaki', 195, "Drama", true));
-myLibrary.push(new Book('Be Here Now', 'Ram Dass', 116, "Romance", true));
-myLibrary.push(new Book('PIHKAL', 'Alexander Shulgin', 978, "Horror",false));
-
-inputGenre.addEventListener('change', function() {
-    if (inputGenre.value === "Other") {
-        inputOtherGenre.style.display = "flex";
-    }
-    else {
-        inputOtherGenre.style.display = "none";
-    }
-})
+myLibrary.push(new Book('Rich Dad, Poor Dad', 'Robert T. Kiyosaki', 195, false, 'Other'));
+myLibrary.push(new Book('Be Here Now', 'Ram Dass', 116, true, 'Horror'));
+myLibrary.push(new Book('PIHKAL', 'Alexander Shulgin', 978, false, 'Science Fiction'));
 
 updateBookshelf();
