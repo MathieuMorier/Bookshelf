@@ -101,6 +101,11 @@ class Book {
 
 	updateBookshelf();
 }
+
+    deleteBook(){
+		this.del = true;
+	updateBookshelf();
+}
 }
 
 function addBookToLibrary(title, author, pages, genres, read) {
@@ -125,6 +130,16 @@ function updateBookshelf() {
     let toreadBook = [];
     let recBook = [];
     let favBook = [];
+	let i = 0;
+	/* Before running the loop to add books to the grids, delete the ones marked for deletion from 
+	   the array.*/
+	for(book of myLibrary)
+	{
+		if(book.del == true){
+		  myLibrary.splice(book, 1);
+        }
+	}
+	
     for(book of myLibrary)
     {
         if(book.read == true){
@@ -142,6 +157,7 @@ function updateBookshelf() {
         if(book.favorites == true){
           favBook.push(book);
 		}
+
     }
     console.log(readBook.length)
     console.log(readingBook.length)
@@ -149,7 +165,7 @@ function updateBookshelf() {
     console.log(recBook.length)
     console.log(favBook.length)
 		
-	let i = 0;
+	i = 0;
 
     // add book cards to the books grid
     for (book of readBook) {
@@ -159,6 +175,7 @@ function updateBookshelf() {
 		let btntoRead = [];
 		let btnReading = [];
 		let btnFavorite = [];
+		let btnDelete = [];
         
         bookCard = document.createElement('article');
         bookCard.classList.add('book-card');
@@ -211,11 +228,11 @@ function updateBookshelf() {
         btnFavorite[index].addEventListener('click', function () {readBook[index].toggleFavoritesHandler();});
         bookButtons.appendChild(btnFavorite[index]);
 
-        const btnDelete = document.createElement('button');
-        btnDelete.classList.add('btn', 'btn-delete');
-        btnDelete.textContent = "Delete";
-        btnDelete.addEventListener('click', deleteBook);
-        bookButtons.appendChild(btnDelete);
+        btnDelete[index] = document.createElement('button');
+        btnDelete[index].classList.add('btn', 'btn-delete');
+        btnDelete[index].textContent = "Delete";
+        btnDelete[index].addEventListener('click', function () {readBook[index].deleteBook();});
+        bookButtons.appendChild(btnDelete[index]);
 
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
@@ -250,6 +267,7 @@ function updateBookshelf() {
 		let btntoRead = [];
 		let btnReading = [];
 		let btnFavorite = [];
+		let btnDelete = [];
 		
         bookCard = document.createElement('article');
         bookCard.classList.add('book-card');
@@ -302,11 +320,11 @@ function updateBookshelf() {
         btnFavorite[index].addEventListener('click', function () {readingBook[index].toggleFavoritesHandler();});
         bookButtons.appendChild(btnFavorite[index]);
 
-        const btnDelete = document.createElement('button');
-        btnDelete.classList.add('btn', 'btn-delete');
-        btnDelete.textContent = "Delete";
-        btnDelete.addEventListener('click', deleteBook);
-        bookButtons.appendChild(btnDelete);
+        btnDelete[index] = document.createElement('button');
+        btnDelete[index].classList.add('btn', 'btn-delete');
+        btnDelete[index].textContent = "Delete";
+        btnDelete[index].addEventListener('click', function () {readingBook[index].deleteBook();});
+        bookButtons.appendChild(btnDelete[index]);
 
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
@@ -340,6 +358,7 @@ function updateBookshelf() {
 		let btntoRead = [];
 		let btnReading = [];
 		let btnFavorite = [];
+		let btnDelete = [];
         
         bookCard = document.createElement('article');
         bookCard.classList.add('book-card');
@@ -392,11 +411,11 @@ function updateBookshelf() {
         btnFavorite[index].addEventListener('click', function () {toreadBook[index].toggleFavoritesHandler();});
         bookButtons.appendChild(btnFavorite[index]);
 
-        const btnDelete = document.createElement('button');
-        btnDelete.classList.add('btn', 'btn-delete');
-        btnDelete.textContent = "Delete";
-        btnDelete.addEventListener('click', deleteBook);
-        bookButtons.appendChild(btnDelete);
+        btnDelete[index] = document.createElement('button');
+        btnDelete[index].classList.add('btn', 'btn-delete');
+        btnDelete[index].textContent = "Delete";
+        btnDelete[index].addEventListener('click', function () {toreadBook[index].deleteBook();});
+        bookButtons.appendChild(btnDelete[index]);
 
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
@@ -431,6 +450,7 @@ function updateBookshelf() {
 		let btntoRead = [];
 		let btnReading = [];
 		let btnFavorite = [];
+		let btnDelete = [];
         
         bookCard = document.createElement('article');
         bookCard.classList.add('book-card');
@@ -483,11 +503,11 @@ function updateBookshelf() {
         btnFavorite[index].addEventListener('click', function () {recBook[index].toggleFavoritesHandler();});
         bookButtons.appendChild(btnFavorite[index]);
 
-        const btnDelete = document.createElement('button');
-        btnDelete.classList.add('btn', 'btn-delete');
-        btnDelete.textContent = "Delete";
-        btnDelete.addEventListener('click', deleteBook);
-        bookButtons.appendChild(btnDelete);
+        btnDelete[index] = document.createElement('button');
+        btnDelete[index].classList.add('btn', 'btn-delete');
+        btnDelete[index].textContent = "Delete";
+        btnDelete[index].addEventListener('click', function () {recBook[index].deleteBook();});
+        bookButtons.appendChild(btnDelete[index]);
 
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
@@ -522,6 +542,7 @@ function updateBookshelf() {
 		let btntoRead = [];
 		let btnReading = [];
 		let btnFavorite = [];
+		let btnDelete = [];
         
         bookCard = document.createElement('article');
         bookCard.classList.add('book-card');
@@ -574,11 +595,11 @@ function updateBookshelf() {
         btnFavorite[index].addEventListener('click', function () {favBook[index].toggleFavoritesHandler();});
         bookButtons.appendChild(btnFavorite[index]);
 
-        const btnDelete = document.createElement('button');
-        btnDelete.classList.add('btn', 'btn-delete');
-        btnDelete.textContent = "Delete";
-        btnDelete.addEventListener('click', deleteBook);
-        bookButtons.appendChild(btnDelete);
+        btnDelete[index] = document.createElement('button');
+        btnDelete[index].classList.add('btn', 'btn-delete');
+        btnDelete[index].textContent = "Delete";
+        btnDelete[index].addEventListener('click', function () {favBook[index].deleteBook();});
+        bookButtons.appendChild(btnDelete[index]);
 
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
