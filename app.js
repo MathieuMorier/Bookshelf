@@ -2,6 +2,8 @@ const btnAdd = document.querySelector('#btn-add');
 const btnReset = document.querySelector('#btn-reset');
 const bookForm = document.querySelector('.book-form');
 const inputTitle = document.querySelector('#input-title');
+const inputGenre = document.querySelector('#input-genres');
+const inputOtherGenre = document.querySelector('#input-other-genre');
 const inputAuthor = document.querySelector('#input-author');
 const inputPages = document.querySelector('#input-pages');
 const inputRead = document.querySelector('#input-read');
@@ -15,12 +17,13 @@ const booksUnread = document.querySelector('#books-unread');
 let myLibrary = [];
 
 class Book {
-    constructor(title, author, pages, read,
+    constructor(title, author, pages, genre, read,
         reading = false, toRead = false,
         recommended = true, favorites = false) {
         this.title = title;
         this.author = author;
         this.pages = pages;
+        this.genre = genre;
         this.read = read;
         this.reading = reading;
         this.toRead = toRead;
@@ -97,8 +100,8 @@ class Book {
 }
 }
 
-function addBookToLibrary(title, author, pages, read) {
-    myLibrary.push(new Book(title, author, pages, read));
+function addBookToLibrary(title, author, pages, genres, read) {
+    myLibrary.push(new Book(title, author, pages, genres, read));
     updateBookshelf();
 }
 
@@ -166,6 +169,10 @@ function updateBookshelf() {
         bookAuthor.classList.add('book-author');
         bookAuthor.textContent = book.author;
 
+        const bookGenres = document.createElement('p');
+        bookGenres.classList.add('book-genres');
+        bookGenres.textContent = book.genre;
+
         const bookPages = document.createElement('p');
         bookPages.classList.add('book-pages');
         bookPages.textContent = `${book.pages} pages`;
@@ -210,6 +217,7 @@ function updateBookshelf() {
 
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
+        bookCard.appendChild(bookGenres);
         bookCard.appendChild(bookPages);
         bookCard.appendChild(bookButtons);
         
@@ -241,6 +249,10 @@ function updateBookshelf() {
         const bookAuthor = document.createElement('p');
         bookAuthor.classList.add('book-author');
         bookAuthor.textContent = book.author;
+
+        const bookGenres = document.createElement('p');
+        bookGenres.classList.add('book-genres');
+        bookGenres.textContent = book.genre;
 
         const bookPages = document.createElement('p');
         bookPages.classList.add('book-pages');
@@ -286,6 +298,7 @@ function updateBookshelf() {
 
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
+        bookCard.appendChild(bookGenres)
         bookCard.appendChild(bookPages);
         bookCard.appendChild(bookButtons);
         
@@ -315,6 +328,10 @@ function updateBookshelf() {
         const bookAuthor = document.createElement('p');
         bookAuthor.classList.add('book-author');
         bookAuthor.textContent = book.author;
+
+        const bookGenres = document.createElement('p');
+        bookGenres.classList.add('book-genres');
+        bookGenres.textContent = book.genre;
 
         const bookPages = document.createElement('p');
         bookPages.classList.add('book-pages');
@@ -360,6 +377,7 @@ function updateBookshelf() {
 
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
+        bookCard.appendChild(bookGenres);
         bookCard.appendChild(bookPages);
         bookCard.appendChild(bookButtons);
         
@@ -390,6 +408,10 @@ function updateBookshelf() {
         const bookAuthor = document.createElement('p');
         bookAuthor.classList.add('book-author');
         bookAuthor.textContent = book.author;
+
+        const bookGenres = document.createElement('p');
+        bookGenres.classList.add('book-genres');
+        bookGenres.textContent = book.genre;
 
         const bookPages = document.createElement('p');
         bookPages.classList.add('book-pages');
@@ -435,6 +457,7 @@ function updateBookshelf() {
 
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
+        bookCard.appendChild(bookGenres);
         bookCard.appendChild(bookPages);
         bookCard.appendChild(bookButtons);
         
@@ -465,6 +488,10 @@ function updateBookshelf() {
         const bookAuthor = document.createElement('p');
         bookAuthor.classList.add('book-author');
         bookAuthor.textContent = book.author;
+
+        const bookGenres = document.createElement('p');
+        bookGenres.classList.add('book-genres');
+        bookGenres.textContent = book.genre;
 
         const bookPages = document.createElement('p');
         bookPages.classList.add('book-pages');
@@ -510,6 +537,7 @@ function updateBookshelf() {
 
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
+        bookCard.appendChild(bookGenres);
         bookCard.appendChild(bookPages);
         bookCard.appendChild(bookButtons);
         
@@ -523,6 +551,9 @@ function updateBookshelf() {
     if (!myLibrary.length) {
         booksGrid[0].textContent = 'Add your first book.';
         booksGrid[1].textContent = 'Add your first book.';
+        booksGrid[2].textContent = 'Add your first book.';
+        booksGrid[3].textContent = 'Add your first book.';
+        booksGrid[4].textContent = 'Add your first book.';
     }
 
     updateStats();
@@ -543,7 +574,12 @@ const submitBook = () => {
     const title = inputTitle.value;
     const author = inputAuthor.value;
     const pages = inputPages.value;
+    let genres = inputGenre.value;
     const read = inputRead.checked;
+
+    if(genres === "Other") {
+        genres = inputOtherGenre.value;
+    }
 
     // require all input fields to be filled
     if (!(title && author && pages)) {
@@ -555,7 +591,7 @@ const submitBook = () => {
         alert('Book can not be shorter than 1 page.');
         return;
     }
-    addBookToLibrary(title, author, pages, read);
+    addBookToLibrary(title, author, pages, genres, read);
     toggleForm();
 }
 
@@ -570,6 +606,7 @@ const resetForm = () => {
     inputTitle.value = '';
     inputAuthor.value = '';
     inputPages.value = '';
+    inputGenre.valu = '';
     inputRead.checked = false;
 }
 
@@ -587,8 +624,17 @@ btnSubmit.addEventListener('click', submitBook)
 overlay.addEventListener('click', toggleForm);
 
 // add sample books
-myLibrary.push(new Book('Rich Dad, Poor Dad', 'Robert T. Kiyosaki', 195, false));
-myLibrary.push(new Book('Be Here Now', 'Ram Dass', 116, true));
-myLibrary.push(new Book('PIHKAL', 'Alexander Shulgin', 978, false));
+myLibrary.push(new Book('Rich Dad, Poor Dad', 'Robert T. Kiyosaki', 195, "Drama", true));
+myLibrary.push(new Book('Be Here Now', 'Ram Dass', 116, "Romance", true));
+myLibrary.push(new Book('PIHKAL', 'Alexander Shulgin', 978, "Horror",false));
+
+inputGenre.addEventListener('change', function() {
+    if (inputGenre.value === "Other") {
+        inputOtherGenre.style.display = "flex";
+    }
+    else {
+        inputOtherGenre.style.display = "none";
+    }
+})
 
 updateBookshelf();
