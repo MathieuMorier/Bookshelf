@@ -17,9 +17,10 @@ const booksUnread = document.querySelector('#books-unread');
 let myLibrary = [];
 
 class Book {
+
     constructor(title, author, pages, genre, read,
         reading = false, toRead = false,
-        recommended = true, favorites = false) {
+        recommended = true, favorites = false, del = false) {
         this.title = title;
         this.author = author;
         this.pages = pages;
@@ -32,6 +33,8 @@ class Book {
 	    else
 		this.recommended = recommended;
         this.favorites = favorites;
+		this.genre = genre;
+		this.del = del;
     }
     toggleRead() {
         this.read = this.read ? false : true;
@@ -112,11 +115,10 @@ const deleteBook = (e) => {
 }
 
 function updateBookshelf() {
-    booksGrid[0].replaceChildren();
-    booksGrid[1].replaceChildren();
-    booksGrid[2].replaceChildren();
-    booksGrid[3].replaceChildren();
-    booksGrid[4].replaceChildren();
+  for(let j = 0; j < 30; j++)
+  {
+    booksGrid[j].replaceChildren();
+  }
     
     let readBook =[];
     let readingBook = [];
@@ -220,9 +222,19 @@ function updateBookshelf() {
         bookCard.appendChild(bookGenres);
         bookCard.appendChild(bookPages);
         bookCard.appendChild(bookButtons);
-        
-        booksGrid[0].appendChild(bookCard);      
-	
+		
+		if(book.genre == 'Comedy')
+			booksGrid[0].appendChild(bookCard);      
+		else if(book.genre == 'Romance')
+			booksGrid[1].appendChild(bookCard);      
+		else if(book.genre == 'Horror')
+			booksGrid[2].appendChild(bookCard);      
+		else if(book.genre == 'Drama')
+			booksGrid[3].appendChild(bookCard);      
+		else if(book.genre == 'Science Fiction')
+			booksGrid[4].appendChild(bookCard);    
+        else  
+			booksGrid[5].appendChild(bookCard);   			
 	    ++i;
     }
 	
@@ -302,7 +314,18 @@ function updateBookshelf() {
         bookCard.appendChild(bookPages);
         bookCard.appendChild(bookButtons);
         
-        booksGrid[1].appendChild(bookCard);    
+		if(book.genre == 'Comedy')
+			booksGrid[6].appendChild(bookCard);      
+		else if(book.genre == 'Romance')
+			booksGrid[7].appendChild(bookCard);      
+		else if(book.genre == 'Horror')
+			booksGrid[8].appendChild(bookCard);      
+		else if(book.genre == 'Drama')
+			booksGrid[9].appendChild(bookCard);      
+		else if(book.genre == 'Science Fiction')
+			booksGrid[10].appendChild(bookCard);    
+        else  
+			booksGrid[11].appendChild(bookCard);   	    
 
         ++i;		
     }
@@ -381,7 +404,18 @@ function updateBookshelf() {
         bookCard.appendChild(bookPages);
         bookCard.appendChild(bookButtons);
         
-        booksGrid[2].appendChild(bookCard);   
+		if(book.genre == 'Comedy')
+			booksGrid[12].appendChild(bookCard);      
+		else if(book.genre == 'Romance')
+			booksGrid[13].appendChild(bookCard);      
+		else if(book.genre == 'Horror')
+			booksGrid[14].appendChild(bookCard);      
+		else if(book.genre == 'Drama')
+			booksGrid[15].appendChild(bookCard);      
+		else if(book.genre == 'Science Fiction')
+			booksGrid[16].appendChild(bookCard);    
+        else  
+			booksGrid[17].appendChild(bookCard);   	  
 
         ++i;		
     }
@@ -461,7 +495,18 @@ function updateBookshelf() {
         bookCard.appendChild(bookPages);
         bookCard.appendChild(bookButtons);
         
-        booksGrid[3].appendChild(bookCard);
+		if(book.genre == 'Comedy')
+			booksGrid[18].appendChild(bookCard);      
+		else if(book.genre == 'Romance')
+			booksGrid[19].appendChild(bookCard);      
+		else if(book.genre == 'Horror')
+			booksGrid[20].appendChild(bookCard);      
+		else if(book.genre == 'Drama')
+			booksGrid[21].appendChild(bookCard);      
+		else if(book.genre == 'Science Fiction')
+			booksGrid[22].appendChild(bookCard);    
+        else  
+			booksGrid[23].appendChild(bookCard);   	
 
         ++i;		
     }
@@ -541,7 +586,18 @@ function updateBookshelf() {
         bookCard.appendChild(bookPages);
         bookCard.appendChild(bookButtons);
         
-        booksGrid[4].appendChild(bookCard);  
+		if(book.genre == 'Comedy')
+			booksGrid[24].appendChild(bookCard);      
+		else if(book.genre == 'Romance')
+			booksGrid[25].appendChild(bookCard);      
+		else if(book.genre == 'Horror')
+			booksGrid[26].appendChild(bookCard);      
+		else if(book.genre == 'Drama')
+			booksGrid[27].appendChild(bookCard);      
+		else if(book.genre == 'Science Fiction')
+			booksGrid[28].appendChild(bookCard);    
+        else  
+			booksGrid[29].appendChild(bookCard);   	
 
         ++i;		
     }
@@ -624,6 +680,7 @@ btnSubmit.addEventListener('click', submitBook)
 overlay.addEventListener('click', toggleForm);
 
 // add sample books
+
 myLibrary.push(new Book('Rich Dad, Poor Dad', 'Robert T. Kiyosaki', 195, "Drama", true));
 myLibrary.push(new Book('Be Here Now', 'Ram Dass', 116, "Romance", true));
 myLibrary.push(new Book('PIHKAL', 'Alexander Shulgin', 978, "Horror",false));
